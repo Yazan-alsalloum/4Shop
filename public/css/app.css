@@ -79,7 +79,18 @@ header{
 .product-body{
 	width: 50%;
 	padding: 1em 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
 }
+.product-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
 
 .products .form-control{
 	margin-top: 1em;
@@ -141,3 +152,4 @@ span.collapsing{
 		height: 24px;
 	}
 }
+
