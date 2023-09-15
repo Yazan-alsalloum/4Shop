@@ -153,3 +153,12 @@ span.collapsing{
 	}
 }
 
+
+.korting-text {
+    color: red;
+}
+
+.korting-value {
+    font-weight: bold;
+    color: red;
+}
