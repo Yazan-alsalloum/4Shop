@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
             $table->decimal('amount', 8, 2)->nullable();
             $table->string('mollie_id')->nullable();
             $table->boolean('payed')->default(false);
+            $table->boolean('delivered')->default(false);
             $table->timestamps();
         });
     }
