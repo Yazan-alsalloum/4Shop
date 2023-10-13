@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\UserController;
@@ -55,9 +56,17 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::get('orders/packing', [AdminOrderController::class, 'packing'])->name('admin.orders.packing');
     Route::resource('orders', AdminOrderController::class, ['as' => 'admin'])->only(['index', 'show', 'destroy']);
 
+    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class, ['as' => 'admin'])->except('show');
+
 });
 
 Route::view('/login', 'auth.login')->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('authenticate');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+
+Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class, ['as' => 'admin'])->except('show');
+Route::get('admin/categories/{category}/products', 'Admin\CategoryController@products')->name('admin.categories.products');
+
+
