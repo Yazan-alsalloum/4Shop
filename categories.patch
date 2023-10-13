@@ -1,0 +1,231 @@
+From 6ea5e8154f890d98370c5f49de639927644c7a1a Mon Sep 17 00:00:00 2001
+From: Bart Roos <bart@studiokaa.co>
+Date: Tue, 20 Jul 2021 19:01:12 +0200
+Subject: [PATCH] Create patch-file
+
+---
+ app/Models/Category.php                              |  9 ++
+ .../Controllers/Admin/CategoryController.php  | 88 +++++++++++++++++++
+ database/seeders/DatabaseSeeder.php             | 16 ++++
+ .../views/admin/categories/index.blade.php    |  1 +
+ resources/views/layouts/admin.blade.php       |  3 +
+ routes/web.php                                |  2 +
+ 6 files changed, 119 insertions(+)
+ create mode 100644 app/Models/Category.php
+ create mode 100644 app/Http/Controllers/Admin/CategoryController.php
+ create mode 100644 resources/views/admin/categories/index.blade.php
+
+diff --git a/app/Models/Category.php b/app/Models/Category.php
+new file mode 100644
+index 0000000..ad4bf12
+--- /dev/null
++++ b/app/Models/Category.php
+@@ -0,0 +1,9 @@
++<?php
++
++namespace App\Models;
++
++use Illuminate\Database\Eloquent\Model;
++
++class Category extends Model
++{
++}
+diff --git a/app/Http/Controllers/Admin/CategoryController.php b/app/Http/Controllers/Admin/CategoryController.php
+new file mode 100644
+index 0000000..141527a
+--- /dev/null
++++ b/app/Http/Controllers/Admin/CategoryController.php
+@@ -0,0 +1,88 @@
++<?php
++
++namespace App\Http\Controllers\Admin;
++
++use App\Models\Category;
++use Illuminate\Http\Request;
++use App\Http\Controllers\Controller;
++
++class CategoryController extends Controller
++{
++    /**
++     * Display a listing of the resource.
++     *
++     * @return \Illuminate\Http\Response
++     */
++    public function index()
++    {
++        $categories = Category::all();
++        return view('admin.categories.index')
++                ->with(compact('categories'));
++    }
++
++    /**
++     * Show the form for creating a new resource.
++     *
++     * @return \Illuminate\Http\Response
++     */
++    public function create()
++    {
++        //
++    }
++
++    /**
++     * Store a newly created resource in storage.
++     *
++     * @param  \Illuminate\Http\Request  $request
++     * @return \Illuminate\Http\Response
++     */
++    public function store(Request $request)
++    {
++        //
++    }
++
++    /**
++     * Display the specified resource.
++     *
++     * @param  \App\Models\Category  $category
++     * @return \Illuminate\Http\Response
++     */
++    public function show(Category $category)
++    {
++        //
++    }
++
++    /**
++     * Show the form for editing the specified resource.
++     *
++     * @param  \App\Models\Category  $category
++     * @return \Illuminate\Http\Response
++     */
++    public function edit(Category $category)
++    {
++        //
++    }
++
++    /**
++     * Update the specified resource in storage.
++     *
++     * @param  \Illuminate\Http\Request  $request
++     * @param  \App\Models\Category  $category
++     * @return \Illuminate\Http\Response
++     */
++    public function update(Request $request, Category $category)
++    {
++        //
++    }
++
++    /**
++     * Remove the specified resource from storage.
++     *
++     * @param  \App\Models\Category  $category
++     * @return \Illuminate\Http\Response
++     */
++    public function destroy(Category $category)
++    {
++        //
++    }
++}
+diff --git a/database/seeders/DatabaseSeeder.php b/database/seeders/DatabaseSeeder.php
+index 58e9f99..99e69bd 100644
+--- a/database/seeders/DatabaseSeeder.php
++++ b/database/seeders/DatabaseSeeder.php
+@@ -5,6 +5,7 @@ use App\Models\Product;
+ use App\Models\Type;
+ use App\Models\Size;
+ use App\Models\User;
++use App\Models\Category;
+ 
+ class DatabaseSeeder extends Seeder
+ {
+@@ -24,12 +25,23 @@ class DatabaseSeeder extends Seeder
+ 
+         /////////////////////////////////
+ 
++        $category_kleding = new Category();
++        $category_kleding->name = "Kleding";
++        $category_kleding->save();
++
++        $category_overige = new Category();
++        $category_overige->name = "Overige";
++        $category_overige->save();
++
++        /////////////////////////////////
++
+         $product = new Product();
+         $product->title = 'Vest';
+         $product->description = 'Hoody met rits, voor stafleden en explorers. Logo voor en handjes achter op de rug.';
+         $product->price = 29.00;
+         $product->leiding = true;
+         $product->image = 'img/hoody.png';
++        $product->category_id = $category_kleding->id;
+         $product->save();
+         $product->refresh();
+         if(array_key_exists('discount', $product->getAttributes()))
+@@ -76,6 +88,7 @@ class DatabaseSeeder extends Seeder
+         $product->price = 22.00;
+         $product->leiding = true;
+         $product->image = 'img/polo.png';
++        $product->category_id = $category_kleding->id;
+         $product->save();
+ 
+         $type = new Type();
+@@ -116,6 +129,7 @@ class DatabaseSeeder extends Seeder
+         $product->price = 7.50;
+         $product->leiding = false;
+         $product->image = 'img/jeugd.jpg';
++        $product->category_id = $category_kleding->id;
+         $product->save();
+ 
+         $type = new Type();
+@@ -156,6 +170,7 @@ class DatabaseSeeder extends Seeder
+         $product->price = 16.00;
+         $product->leiding = true;
+         $product->image = 'img/staf.jpg';
++        $product->category_id = $category_kleding->id;
+         $product->save();
+ 
+         $type = new Type();
+@@ -211,6 +226,7 @@ class DatabaseSeeder extends Seeder
+         $product->price = 1.00;
+         $product->leiding = false;
+         $product->image = 'img/keycords.jpg';
++        $product->category_id = $category_overige->id;
+         $product->save();
+ 
+         $type = new Type();
+diff --git a/resources/views/admin/categories/index.blade.php b/resources/views/admin/categories/index.blade.php
+new file mode 100644
+index 0000000..29d2dde
+--- /dev/null
++++ b/resources/views/admin/categories/index.blade.php
+@@ -0,0 +1 @@
++{{ $categories }}
+diff --git a/resources/views/layouts/admin.blade.php b/resources/views/layouts/admin.blade.php
+index b83c919..8ea8b83 100644
+--- a/resources/views/layouts/admin.blade.php
++++ b/resources/views/layouts/admin.blade.php
+@@ -26,6 +26,9 @@
+                 <li class="nav-item">
+                     <a class="nav-link" href="{{ route('admin.products.index') }}">Producten</a>
+                 </li>
++                <li class="nav-item">
++                    <a class="nav-link" href="{{ route('admin.categories.index') }}">Categorieën</a>
++                </li>
+                 <li class="nav-item">
+                     <a class="nav-link" href="{{ route('admin.users.index') }}">Accounts</a>
+                 </li>
+diff --git a/routes/web.php b/routes/web.php
+index 3c85e36..6740251 100644
+--- a/routes/web.php
++++ b/routes/web.php
+@@ -56,6 +45,8 @@ Route::post('orders/mail', [AdminOrderController::class, 'mail_send'])->name('admin.orders.mail.send');
+     Route::get('orders/packing', [AdminOrderController::class, 'packing'])->name('admin.orders.packing');
+     Route::resource('orders', AdminOrderController::class, ['as' => 'admin'])->only(['index', 'show', 'destroy']);
+ 
++    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class, ['as' => 'admin'])->except('show');
++
+ });
+ 
+ Route::view('/login', 'auth.login')->name('login');
+-- 
+2.23.0.windows.1
+
