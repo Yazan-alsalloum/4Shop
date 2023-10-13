@@ -27,6 +27,9 @@
                     <a class="nav-link" href="{{ route('admin.products.index') }}">Producten</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.categories.index') }}">Categorieën</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.users.index') }}">Accounts</a>
                 </li>
             </ul>
