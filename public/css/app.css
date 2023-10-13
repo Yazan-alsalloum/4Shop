@@ -162,3 +162,7 @@ span.collapsing{
     font-weight: bold;
     color: red;
 }
+.btn-block {
+    display: block;
+    width: 50%;
+}
