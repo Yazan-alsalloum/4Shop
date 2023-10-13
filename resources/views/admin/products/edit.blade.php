@@ -2,16 +2,25 @@
 
 @section('content')
 
-<div class="d-flex align-items-center flex-column my-5"> 
+<div class="d-flex align-items-center flex-column my-5">
 
 	<form action="{{ route('admin.products.update', $product) }}" method="POST" style="min-width: 320px;" enctype="multipart/form-data">
-		
+
 		<h4>Product aanpassen</h4>
 
 		<div class="form-group">
 			<label for="title">Titel</label>
 			<input type="text" id="title" name="title" class="form-control" value="{{ old('title', $product->title) }}">
 		</div>
+    <div class="form-group">
+            <label for="category_id">Categorie</label>
+            <select id="category_id" name="category_id" class="form-control">
+                <option value="" selected>Kies een categorie</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}" @if(old('category_id', $product->category_id) == $category->id) selected @endif>{{ $category->name }}</option>
+                @endforeach
+            </select>
+        </div>
 		<div class="form-group">
 			<label for="price">Prijs</label>
 			<div class="input-group mb-2">
