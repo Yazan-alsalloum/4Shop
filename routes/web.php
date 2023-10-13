@@ -67,6 +67,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class, ['as' => 'admin'])->except('show');
-Route::get('admin/categories/{category}/products', 'Admin\CategoryController@products')->name('admin.categories.products');
+Route::get('categories/{category}/products', 'Admin\CategoryController@products')->name('admin.categories.products');
+
 
 
