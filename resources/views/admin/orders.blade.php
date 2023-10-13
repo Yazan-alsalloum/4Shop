@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-	
+
 	<div class="d-flex justify-content-between align-items-center my-4">
 		<h4>Bestellingen</h4>
 		<div>
@@ -9,9 +9,9 @@
 			<a href="{{ route('admin.orders.mail') }}">Verstuur mails over ophalen &gt;</a><br />
 			<a href="{{ route('admin.orders.packing') }}" target="_blank">Print pakbonnen &gt;</a>
 		</div>
-		
+
 	</div>
-	
+
 	<table class="table table-striped table-hover">
 		<tr>
 			<th>#</th>
@@ -19,6 +19,7 @@
 			<th>Speltak</th>
 			<th>Bedrag</th>
 			<th>Betaling</th>
+            <th>delivery</th>
 		</tr>
 		@foreach($orders as $order)
 			<tr>
@@ -31,6 +32,9 @@
 				<td>
 					{!! $order->payed ? '<span class="badge badge-success">betaald</span>' : '<span class="badge badge-warning">niet betaald</span>' !!}
 				</td>
+                <td>
+                    {!! $order->delivered ? '<span class="badge badge-success">delivered</span>' : '<span class="badge badge-warning">niet delivered</span>' !!}
+                </td>
 			</tr>
 		@endforeach
 	</table>
