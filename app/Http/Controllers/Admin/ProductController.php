@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -17,9 +18,11 @@ class ProductController extends Controller
                 ->with(compact('products'));
     }
 
-    public function create(Request $request)
+    public function create()
     {
-        return view('admin.products.create');
+        $categories = Category::all(); 
+
+        return view('admin.products.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -30,15 +33,17 @@ class ProductController extends Controller
             'active' => 'required|boolean',
             'leiding' => 'required|boolean',
             'image' => 'nullable|image',
-            'description' => 'nullable'
+            'description' => 'nullable',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         $product = new Product();
-        $product->title = $request->title; 
+        $product->title = $request->title;
         $product->price = $request->price;
         $product->active = $request->active;
         $product->leiding = $request->leiding;
         $product->description = $request->description;
+        $product->category_id = $request->input('category_id');
         if($request->hasFile('image'))
         {
             $product->image = $request->image->store('img');
@@ -66,7 +71,7 @@ class ProductController extends Controller
             'description' => 'required',
             'sizes' => 'required'
         ]);
-        
+
         $type = new Type();
         $type->title = $request->title;
         $type->description = $request->description;
@@ -93,12 +98,13 @@ class ProductController extends Controller
     {
         $type->delete();
         return redirect()->route('admin.products.types', $product);
-    }    
+    }
 
     public function edit(Product $product)
     {
+        $categories = Category::all();
         return view('admin.products.edit')
-                ->with(compact('product'));
+                ->with(compact('product' , 'categories'));
     }
 
     public function update(Request $request, Product $product)
@@ -109,14 +115,18 @@ class ProductController extends Controller
             'active' => 'required|boolean',
             'leiding' => 'required|boolean',
             'image' => 'nullable|image',
-            'description' => 'nullable'
+            'description' => 'nullable',
+            'category_id' => 'required|exists:categories,id',
+
+
         ]);
 
-        $product->title = $request->title; 
+        $product->title = $request->title;
         $product->price = $request->price;
         $product->active = $request->active;
         $product->leiding = $request->leiding;
         $product->description = $request->description;
+        $product->category_id = $request->input('category_id');
         if($request->hasFile('image'))
         {
             $product->image = $request->image->store('img');
