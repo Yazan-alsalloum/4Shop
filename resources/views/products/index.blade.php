@@ -2,6 +2,18 @@
 
 @section('content')
 
+<div class="container">
+    <h1 class="mt-4">Categorieën</h1>
+    <ul class="list-group mt-3">
+        @foreach ($categories as $category)
+            <li class="list-group-item">
+                <a href="{{ route('products.category', $category->id) }}" class="text-decoration-none">{{ $category->name }}</a>
+            </li>
+        @endforeach
+    </ul>
+</div>
+
+
 	<div class="products">
 		@foreach($products as $product)
 			<a class="product-row no-link" href="{{ route('products.show', $product) }}">
