@@ -63,4 +63,13 @@ class OrderController extends Controller
         return view('admin.packing')
                 ->with(compact('orders'));
     }
+    public function toggle(Order $order)
+    {
+        // Keer de bezorgstatus om
+        $order->update(['delivered' => !$order->delivered]);
+
+        // Redirect terug naar de vorige pagina
+        return redirect()->route('admin.orders.index');
+    }
+
 }

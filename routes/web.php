@@ -58,6 +58,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
 
     Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class, ['as' => 'admin'])->except('show');
 
+    Route::get('orders/{order}/toggle', [AdminOrderController::class, 'toggle'])->name('admin.orders.toggle');
+
 });
 
 Route::view('/login', 'auth.login')->name('login');

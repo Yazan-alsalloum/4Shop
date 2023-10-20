@@ -20,6 +20,7 @@
 			<th>Bedrag</th>
 			<th>Betaling</th>
             <th>delivery</th>
+            <th>delivery wijzigen</th>
 		</tr>
 		@foreach($orders as $order)
 			<tr>
@@ -31,9 +32,12 @@
 				<td>&euro;{{ number_format($order->amount, 2) }}</td>
 				<td>
 					{!! $order->payed ? '<span class="badge badge-success">betaald</span>' : '<span class="badge badge-warning">niet betaald</span>' !!}
-				</td>
-                <td>
-                    {!! $order->delivered ? '<span class="badge badge-success">delivered</span>' : '<span class="badge badge-warning">niet delivered</span>' !!}
+                    <td>
+                        {!! $order->delivered ? '<span class="badge badge-success">geleverd</span>' : '<span class="badge badge-warning">niet geleverd</span>' !!}
+                    </td>
+                    <td>
+                        <a href="{{ route('admin.orders.toggle', $order) }}">Wijzig bezorgstatus</a>
+                    </td>
                 </td>
 			</tr>
 		@endforeach

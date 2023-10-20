@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+
+        protected $fillable = [
+            'delivered',
+        ];
+
     public function rules()
    	{
    		return $this->hasMany(Order_rule::class);
