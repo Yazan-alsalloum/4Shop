@@ -37,6 +37,6 @@ class ProductController extends Controller
     {
         $products = $category->products()->where('active', true)->get();
 
-        return view('products.category', compact('category', 'products'));
+        return view('products.view_category', compact('category', 'products'));
     }
 }
