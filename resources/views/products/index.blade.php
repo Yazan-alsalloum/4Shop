@@ -2,8 +2,8 @@
 
 @section('content')
 
-<div class="container">
-    <h1 class="mt-4">Categorieën</h1>
+<div class="container mt-4">
+    <h1>Categorieën</h1>
     <ul class="list-group mt-3">
         @foreach ($categories as $category)
             <li class="list-group-item">
@@ -12,6 +12,7 @@
         @endforeach
     </ul>
 </div>
+
 
 
 	<div class="products">
